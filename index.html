@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Pink Sanctuary: Vision Board</title>
+    <!-- تحميل Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- استخدام خط ناعم ومناسب للثيم البناني -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* التخصيص العام للثيم والخط */
+        :root {
+            /* درجات وردية جديدة مستوحاة من الصورة: أكثر نعومة ودفئاً */
+            --pink-light: #FFF0F5; /* خلفية ناعمة جداً (Blush Pink) */
+            --pink-medium: #FFB6C1; /* وردي متوسط دافئ (Light Pink) */
+            --pink-dark: #FF69B4; /* وردي غامق للبروز (Deep Pink) */
+            --pink-accent: #FF1493; /* وردي لامع للـ FAB والتركيز (Deep Magenta) */
+            --text-color: #383838; /* لون نص شبه أسود ناعم */
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--pink-light);
+            color: var(--text-color);
+        }
+        .tab-bar {
+            /* إضاءة وردية خفيفة على شريط التنقل */
+            box-shadow: 0 -8px 20px -5px rgba(255, 105, 180, 0.3);
+        }
+        .floating-action-button {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .floating-action-button:active {
+            transform: scale(0.95) rotate(45deg); /* دوران عند الضغط */
+            box-shadow: 0 0 0 0.2rem rgba(255, 20, 147, 0.5);
+        }
+        .fab-icon-plus {
+            transition: transform 0.3s ease;
+            transform: rotate(0deg);
+        }
+        .fab-icon-close {
+            transition: transform 0.3s ease;
+            transform: rotate(45deg);
+        }
+        /* توهج وردي للأزرار النشطة وعناصر الإبراز */
+        .pink-glow-shadow {
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.7);
+        }
+        /* أنيميشن القائمة السريعة */
+        .quick-action-menu {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        .quick-action-enter {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .quick-action-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .quick-action-leave {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .quick-action-leave-active {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .modal-enter { opacity: 0; transform: scale(0.9); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: opacity 0.2s ease, transform 0.2s ease; }
+        .modal-leave-active { opacity: 0; transform: scale(0.9); transition: opacity 0.2s ease, transform 0.2s ease; }
+        .vision-board {
+            min-height: calc(100vh - 150px);
+            background-color: #ffffff; /* لوح أبيض للإبداع */
+            border-radius: 1.5rem;
+            padding: 1rem;
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1); /* ظل خفيف للوحة */
+        }
+        .vision-item {
+            cursor: grab;
+            transition: all 0.2s;
+            position: absolute;
+            box-shadow: 0 4px 10px -1px rgba(0, 0, 0, 0.15); /* ظل أكبر وأعمق */
+            border: 2px solid var(--pink-medium);
+            background-color: #FFFFFF; /* خلفية بيضاء للعناصر */
+        }
+        .vision-item:active {
+            cursor: grabbing;
+            z-index: 50;
+            transform: scale(1.05);
+        }
+        /* Breathing Display Custom Styling */
+        #breathing-display {
+            transition-property: transform, background-color, box-shadow; 
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); /* حركة التنفس أكثر سلاسة (ease-in-out) */
+            transition-duration: 4000ms;
+        }
+        /* Custom class for list items in grounding */
+        .grounding-list-item {
+            background-color: #ffe6f0; /* لون وردي ناعم جداً للبطاقات الداخلية */
+            border-radius: 1.25rem; /* زوايا أكثر دائرية */
+            padding: 1rem;
+            display: flex;
+            align-items: flex-start;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        /* تحسين شكل الأزرار الوردية */
+        .pink-button {
+             box-shadow: 0 4px 10px rgba(255, 20, 147, 0.3); /* ظل وردي للأزرار */
+        }
+        .modal-content-styled {
+             /* إضافة إطار وردي جميل للنافذة المنبثقة */
+            border: 4px solid var(--pink-dark);
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.5); /* توهج حول المودال */
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- Header -->
+    <header class="p-4 shadow-md sticky top-0 z-40 rounded-b-xl" style="background-color: var(--pink-medium);">
+        <h1 class="text-center text-3xl font-extrabold text-white tracking-wider text-shadow-lg">
+            My Pink Sanctuary 🎀
+        </h1>
+        <p class="text-center text-sm text-white/90 font-medium mt-1">
+            دفترك السري الدافئ والآمن
+        </p>
+    </header>
+
+    <!-- Main Content Area (Dynamic) -->
+    <main id="app-container" class="flex-grow p-4 overflow-y-auto">
+        <!-- Content will be rendered here -->
+    </main>
+    
+    <!-- Quick Action Menu -->
+    <div id="quick-action-menu" class="quick-action-menu fixed bottom-20 left-1/2 transform -translate-x-1/2 mb-4 z-50 flex flex-col items-center space-y-4 hidden">
+        <button id="action-add-image" class="action-item p-4 rounded-full text-white shadow-lg text-2xl transition duration-200 hover:scale-110 pink-button" style="background-color: var(--pink-dark);" title="إضافة هدف/صورة">
+            🖼️
+        </button>
+        <button id="action-add-text" class="action-item p-4 rounded-full text-white shadow-lg text-2xl transition duration-200 hover:scale-110 pink-button" style="background-color: var(--pink-dark);" title="إضافة مدخل نصي">
+            📝
+        </button>
+        <button id="action-add-reminder" class="action-item p-4 rounded-full text-white shadow-lg text-2xl transition duration-200 hover:scale-110 pink-button" style="background-color: var(--pink-dark);" title="إضافة تذكير">
+            🔔
+        </button>
+    </div>
+
+    <!-- Floating Action Button (FAB) - Now for toggling the menu -->
+    <button id="fab-button" class="floating-action-button fixed z-50 bottom-4 left-1/2 transform -translate-x-1/2 p-5 rounded-full text-white shadow-xl text-3xl transition duration-300 ease-in-out hover:scale-105"
+            style="background-color: var(--pink-accent); box-shadow: 0 10px 20px -3px rgba(255, 20, 147, 0.5);">
+        <span id="fab-icon" class="fab-icon-plus font-light">+</span>
+    </button>
+
+    <!-- Navigation Bar (Tab Bar) -->
+    <nav class="tab-bar bg-white sticky bottom-0 z-40 p-3 rounded-t-3xl">
+        <div class="flex justify-around items-center">
+            <!-- Vision Board Tab -->
+            <button id="tab-vision" data-page="vision" class="tab-item flex flex-col items-center p-2 rounded-xl transition duration-200 text-gray-400 hover:text-gray-700">
+                <span class="text-2xl">✨</span>
+                <span class="text-xs font-medium mt-1">الأهداف</span>
+            </button>
+            <!-- Reminders Tab -->
+            <button id="tab-reminders" data-page="reminders" class="tab-item flex flex-col items-center p-2 rounded-xl transition duration-200 text-gray-400 hover:text-gray-700">
+                <span class="text-2xl">🔔</span>
+                <span class="text-xs font-medium mt-1">تذكيرات</span>
+            </button>
+            <!-- My Journal Tab -->
+            <button id="tab-journal" data-page="journal" class="tab-item flex flex-col items-center p-2 rounded-xl transition duration-200 text-gray-400 hover:text-gray-700">
+                <span class="text-2xl">💖</span>
+                <span class="text-xs font-medium mt-1">مذكراتي</span>
+            </button>
+            <!-- Anti-Overthinking Tab -->
+            <button id="tab-anti" data-page="anti" class="tab-item flex flex-col items-center p-2 rounded-xl transition duration-200 text-gray-400 hover:text-gray-700">
+                <span class="text-2xl">🧘‍♀️</span>
+                <span class="text-xs font-medium mt-1">هدوء</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Modal Container -->
+    <div id="modal-container" class="fixed inset-0 bg-gray-900 bg-opacity-30 backdrop-blur-sm z-50 flex items-center justify-center hidden">
+        <div id="modal-content" class="bg-white p-6 rounded-3xl w-11/12 max-w-md shadow-2xl modal-content-styled modal-enter">
+            <!-- Modal content will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Error/Status Message Container -->
+    <div id="message-box" class="fixed top-0 left-0 right-0 p-4 text-center text-white font-bold transition-transform duration-300 ease-in-out transform -translate-y-full z-[60] shadow-lg"
+         style="background-color: var(--pink-accent);">
+        <!-- Status messages appear here -->
+    </div>
+    
+    <!-- PWA Manifest for Add to Home Screen -->
+    <link rel="manifest" href="data:application/json;base64,eyJpY29ucyI6IFt7InNyYyI6ICJodHRwczovL3BsYWNlaG9sZC5jby8xOTJ4MTkyL0ZGNTVGMC9mZmY/dGV4dD0lRTIlOUQlQTglMjZmb250PXdpZGVoZWFkZXIiLCJzaXplcyI6ICIxOTJ4MTkyIiwidHlwZSI6ICJpbWFnZS9wbmciIH0sIHsic3JjIjogImh0dHBzOi8vcGxhY2Vob2xkLmNvLzUxMng1MTIvRkY1NUYwL2ZmZj90ZXh0PSVFRiU5RCVBRSUyNmZvbnQ9d2lkZWhlYWRlciIsInNpemVzIjogIjUxMng1MTIiLCJ0eXBlIjogImltYWdlL3BuZyIgfV0sICJuYW1lIjogIk15IFBpbmssIFNhbmN0dWFyeSIsICJzaG9ydF9uYW1lIjogIlNhbmN0dWFyeSIsICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLCAic3RhcnRfdXJsIjogIi8iLCAiYmFja2dyb3VuZF9jb2xvciI6ICIjRkNFN0Y2IiwgInRoZW1lX2NvbG9yIjogIiNGRDVFOUMiLCAicGhvbmUiOiB0cnVlIH0=">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://placehold.co/180x180/FF1493/fff?text=%F0%9F%92%96">
+    <!-- End PWA Manifest -->
+
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Import all necessary Firebase modules
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, onSnapshot, collection, query, orderBy, addDoc, updateDoc, deleteDoc, setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // Firebase Configuration (YOUR KEYS ARE HERE)
+        const firebaseConfig = {
+             // ⬇️ مفاتيحك الخاصة تم وضعها هنا ⬇️
+             apiKey: "AIzaSyAvCyIkI72PRYAbYwh0RJPxb5QT2c7aZVM", 
+             authDomain: "mental-health-app-3d219.firebaseapp.com", 
+             projectId: "mental-health-app-3d219", 
+             storageBucket: "mental-health-app-3d219.firebasestorage.app",
+             messagingSenderId: "620112651239",
+             appId: "1:620112651239:web:180b2a6d91fb2ea69ed342"
+             // ⬆️ تأكدي أن هذه هي مفاتيحك الصحيحة ⬆️
+        };
+
+        // Global variables and initialization
+        setLogLevel('Debug');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : firebaseConfig.projectId; // Use project ID as default app ID
+        let db, auth;
+        let userId = null;
+        let isAuthReady = false;
+        let dbListeners = [];
+        let currentPage = 'vision'; // Default page is Vision Board
+        let isActionMenuOpen = false; // New state for quick action menu
+
+        // Data holders
+        let visionItems = [];
+        let reminders = [];
+        let journalEntries = [];
+        
+        // --- Anti-Overthinking Specific States ---
+        let breathingInterval = null; // لتنفيذ دورة التنفس بالكامل
+        let countdownInterval = null; // للعداد التنازلي داخل الدائرة
+        let isBreathingActive = false;
+        let currentStepIndex = 0; // تتبع الخطوة الحالية
+        let breathingSteps = [];
+        
+        const mentalHealthQuotes = [
+            { quote: "تذكري، حتى أصعب الأيام ستنتهي. هذه الفترة أيضاً ستمضي.", source: "تذكير ذاتي" },
+            { quote: "أنتِ أقوى مما تظنين، وكل ما عليكِ فعله هو أن تتنفسي.", source: "تأكيد" },
+            { quote: "الصحة النفسية ليست وجهة، بل هي رحلة مستمرة من العناية.", source: "توعية" },
+            { quote: "اسحبي الأكسجين الآن. أنتِ في أمان. كل شيء سيسير على ما يرام.", source: "رسالة هادئة" },
+            { quote: "إيقاف الأفكار لا يعني الفشل، بل يعني أنكِ تختارين السلام.", source: "تذكير" },
+            { quote: "العناية بنفسك هي إنتاجية. الراحة ليست رفاهية بل ضرورة.", source: "توعية" },
+            { quote: "اغفري لنفسكِ الأخطاء. أنتِ إنسانة، وهذا جزء من النمو.", source: "تأكيد" },
+            { quote: "لا يجب أن تكوني مثالية لتكوني محبوبة. أنتِ كافية.", source: "توكيد" },
+            { quote: "مهما كانت العاصفة شديدة، تذكري أنكِ سفينة قوية.", source: "توعية" },
+        ];
+
+
+        // --- Utility Functions (UI Helpers) ---
+        
+        function showMessage(message, type = 'success') {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            msgBox.style.backgroundColor = type === 'success' ? 'var(--pink-accent)' : '#EF4444';
+            msgBox.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                msgBox.style.transform = 'translateY(-100%)';
+            }, 3000);
+        }
+
+        function openModal(htmlContent) {
+            // Close quick action menu first if open
+            if (isActionMenuOpen) {
+                toggleActionMenu(false);
+            }
+            
+            const modalContainer = document.getElementById('modal-container');
+            const modalContent = document.getElementById('modal-content');
+            modalContent.innerHTML = htmlContent;
+            modalContainer.classList.remove('hidden');
+            modalContent.classList.remove('modal-leave-active');
+            modalContent.classList.add('modal-enter-active');
+            modalContent.classList.add('modal-content-styled'); // Apply the pink border/glow
+        }
+
+        function closeModal() {
+            const modalContainer = document.getElementById('modal-container');
+            const modalContent = document.getElementById('modal-content');
+            
+            modalContent.classList.remove('modal-enter-active');
+            modalContent.classList.add('modal-leave-active');
+
+            setTimeout(() => {
+                modalContainer.classList.add('hidden');
+                modalContent.innerHTML = '';
+                modalContent.classList.remove('modal-content-styled');
+            }, 200); 
+        }
+
+        // --- Firebase Core Setup ---
+        
+        function initFirebase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                // Auth State Listener
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        userId = user.uid;
+                        isAuthReady = true;
+                        // Start listening to data once authenticated
+                        startDatabaseListeners();
+                        renderPage(currentPage);
+                        showMessage(`👋 مرحباً بك! هويتك (${userId.substring(0, 8)}...) جاهزة.`);
+                    } else {
+                        // Sign in anonymously if no user is found
+                        await signInAnonymously(auth);
+                    }
+                });
+
+            } catch (error) {
+                console.error("Firebase Initialization Error:", error);
+                const errorMsg = `Initialization error: ${error.code || error.message}. الرجاء التأكد من مفاتيح Firebase وقواعد الأمان (Rules).`;
+                document.getElementById('app-container').innerHTML = `<div class="p-6 text-center text-red-600 bg-red-100 rounded-2xl shadow-lg mt-8">${errorMsg}</div>`;
+            }
+        }
+
+        // --- Database Path Helpers ---
+
+        function getCollectionPath(collectionName) {
+            if (!userId) {
+                console.error("Cannot get collection path: User ID is null.");
+                return null;
+            }
+            // المسار الخاص لكل مستخدم: artifacts/{appId}/users/{userId}/{collectionName}
+            return `artifacts/${appId}/users/${userId}/${collectionName}`;
+        }
+        
+        function getCollectionRef(collectionName) {
+            const path = getCollectionPath(collectionName);
+            // ⚠️ تأكدنا أن path ليس null قبل إنشاء المرجع 
+            return path && db ? collection(db, path) : null;
+        }
+
+        // --- Data Listeners & Handlers ---
+
+        function stopDatabaseListeners() {
+            dbListeners.forEach(unsubscribe => unsubscribe());
+            dbListeners = [];
+        }
+
+        function startDatabaseListeners() {
+            if (!isAuthReady || !db) return;
+            
+            stopDatabaseListeners();
+
+            // 1. Vision Board Listener
+            const visionRef = getCollectionRef('visionItems');
+            if (visionRef) {
+                const q = query(visionRef);
+                const unsub = onSnapshot(q, (snapshot) => {
+                    visionItems = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    if (currentPage === 'vision') renderPage('vision'); // Re-render Vision Board on change
+                }, error => console.error("Error fetching vision items:", error));
+                dbListeners.push(unsub);
+            }
+            
+            // 2. Reminders Listener
+            const remindersRef = getCollectionRef('reminders');
+            if (remindersRef) {
+                // Order reminders by the scheduled time
+                const q = query(remindersRef, orderBy('timestamp', 'desc'));
+                const unsub = onSnapshot(q, (snapshot) => {
+                    reminders = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    if (currentPage === 'reminders') renderPage('reminders'); // Re-render Reminders on change
+                }, error => console.error("Error fetching reminders:", error));
+                dbListeners.push(unsub);
+            }
+            
+            // 3. Journal Listener
+            const journalRef = getCollectionRef('journal');
+            if (journalRef) {
+                // Order journal entries by creation date
+                const q = query(journalRef, orderBy('createdAt', 'desc'));
+                const unsub = onSnapshot(q, (snapshot) => {
+                    journalEntries = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    if(currentPage === 'journal') renderPage('journal'); // Only render if on the page
+                }, error => console.error("Error fetching journal entries:", error));
+                dbListeners.push(unsub);
+            }
+        }
+
+        // --- Core Application Logic (CRUD) ---
+
+        // Image Utility: Converts File object to Base64 String
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+        
+        // --- Vision Board Logic (Image/Goal) ---
+
+        async function handleAddVisionItem(imageFile, title, description) {
+            if (!isAuthReady || !imageFile) return showMessage("خطأ: يرجى تحديد صورة.", 'error');
+
+            try {
+                // 1. Convert image to Base64 for Firestore (simple storage solution)
+                const base64Image = await fileToBase64(imageFile);
+                
+                // 2. Create the document data
+                const newItem = {
+                    title: title || 'هدف جديد',
+                    description: description || '',
+                    imageUrl: base64Image,
+                    createdAt: Date.now(),
+                    // Default position (top left corner)
+                    x: 20, 
+                    y: 20,
+                    width: 150,
+                    height: 150,
+                };
+                
+                const visionRef = getCollectionRef('visionItems');
+                if (!visionRef) {
+                    throw new Error("Vision collection reference is null.");
+                }
+
+                // 3. Save to Firestore
+                await addDoc(visionRef, newItem);
+                closeModal();
+                showMessage("✨ تم إضافة الهدف بنجاح! يمكن سحبه.");
+            } catch (e) {
+                console.error("Error adding vision item:", e);
+                showMessage("❌ فشل في حفظ الهدف. تأكد من قواعد الأمان!", 'error');
+            }
+        }
+        
+        async function updateVisionItemPosition(id, x, y) {
+            if (!isAuthReady) return;
+            const docRef = doc(getCollectionRef('visionItems'), id);
+            try {
+                await updateDoc(docRef, { x, y, lastMoved: Date.now() });
+            } catch (e) {
+                console.error("Error updating position:", e);
+            }
+        }
+
+        // --- Reminders Logic (Text/Time) ---
+        
+        async function handleAddReminder(text, scheduleTime) {
+            if (!isAuthReady || !text.trim()) return showMessage("خطأ: يرجى كتابة التذكير.", 'error');
+
+            try {
+                const newReminder = {
+                    text: text,
+                    schedule: scheduleTime,
+                    timestamp: Date.now(),
+                    sent: false
+                };
+                
+                const remindersRef = getCollectionRef('reminders');
+                if (!remindersRef) {
+                    throw new Error("Reminders collection reference is null.");
+                }
+
+                await addDoc(remindersRef, newReminder); 
+                
+                closeModal();
+                showMessage("🔔 تم حفظ التذكير بنجاح.");
+                // Schedule local notification (requires browser permission)
+                scheduleLocalNotification(text, scheduleTime);
+            } catch (e) {
+                console.error("❌ فشل في حفظ التذكير. قد يكون الخطأ من قواعد أمان Firebase (Security Rules) أو من الاتصال:", e);
+                showMessage("❌ فشل في حفظ التذكير. (راجع الـ Console للمزيد من التفاصيل)", 'error');
+            }
+        }
+        
+        async function handleDeleteReminder(id) {
+            if (!isAuthReady) return;
+            const docRef = doc(getCollectionRef('reminders'), id);
+            try {
+                await deleteDoc(docRef);
+                showMessage("🗑️ تم حذف التذكير.");
+            } catch (e) {
+                console.error("Error deleting reminder:", e);
+                showMessage("❌ فشل في حذف التذكير.", 'error');
+            }
+        }
+        
+        // --- Journal Logic (Text) ---
+
+        async function handleSaveJournalEntry(text) {
+             if (!isAuthReady || !text.trim()) return showMessage("لا يمكن حفظ إدخال فارغ.", 'error');
+
+             try {
+                 const journalRef = getCollectionRef('journal');
+                 if (!journalRef) {
+                    throw new Error("Journal collection reference is null.");
+                 }
+                 
+                 await addDoc(journalRef, {
+                     content: text,
+                     createdAt: Date.now()
+                 });
+                 closeModal();
+                 // Re-render journal page if user is on it
+                 if(currentPage === 'journal') renderPage('journal');
+                 showMessage("💖 تم حفظ المدخل بنجاح.");
+             } catch (e) {
+                 console.error("Error saving journal entry:", e);
+                 showMessage("❌ فشل الحفظ. يرجى مراجعة قواعد Firebase.", 'error');
+             }
+        }
+
+        // --- Notification API (Client Side) ---
+        
+        function requestNotificationPermission() {
+            if (!("Notification" in window)) {
+                showMessage("متصفحك لا يدعم الإشعارات.", 'error');
+            } else if (Notification.permission === "default") {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        showMessage("✅ تم تفعيل الإشعارات!");
+                    } else {
+                        showMessage("❌ تم رفض الإشعارات.", 'error');
+                    }
+                });
+            } else if (Notification.permission === "granted") {
+                // Do nothing, already granted
+            }
+        }
+
+        function scheduleLocalNotification(text, scheduleTime) {
+            if (Notification.permission !== "granted") {
+                 requestNotificationPermission(); // Ask again if needed
+                 return;
+            }
+            
+            const targetTime = new Date(scheduleTime).getTime();
+            const delay = targetTime - Date.now();
+
+            if (delay > 0) {
+                // In a real PWA/App, we'd use Service Worker for persistent notifications
+                // Here, we use a simple JS timeout (only works while app is open)
+                setTimeout(() => {
+                    new Notification("تذكير من My Sanctuary 🔔", {
+                        body: text,
+                        icon: 'https://placehold.co/192x192/FF1493/fff?text=%F0%9F%92%96',
+                    });
+                }, delay);
+            }
+        }
+
+
+        // --- UI Rendering ---
+
+        function renderPage(pageName) {
+            currentPage = pageName;
+            const container = document.getElementById('app-container');
+            const tabItems = document.querySelectorAll('.tab-item');
+            
+            // Close the quick action menu when switching pages
+            toggleActionMenu(false); 
+            
+            // Stop breathing exercise if switching away from the anti page
+            if (pageName !== 'anti' && isBreathingActive) {
+                toggleBreathingExercise(true); // Stop forcefully
+            }
+
+            // Reset UI states
+            container.innerHTML = '';
+            tabItems.forEach(item => {
+                if (item.dataset.page === pageName) {
+                    item.style.color = 'var(--pink-accent)';
+                    item.classList.add('pink-glow-shadow');
+                } else {
+                    item.style.color = '#9CA3AF'; // gray-400
+                    item.classList.remove('pink-glow-shadow');
+                }
+            });
+
+            // Render content based on page
+            switch (pageName) {
+                case 'vision':
+                    renderVisionBoard(container);
+                    break;
+                case 'reminders':
+                    renderReminders(container);
+                    break;
+                case 'journal':
+                    renderJournal(container);
+                    break;
+                case 'anti':
+                    renderAntiOverthinking(container);
+                    break;
+            }
+        }
+        
+        // --- FAB/Quick Action Logic ---
+        
+        function toggleActionMenu(force) {
+            const menu = document.getElementById('quick-action-menu');
+            const icon = document.getElementById('fab-icon');
+            
+            // Determine the new state
+            isActionMenuOpen = typeof force === 'boolean' ? force : !isActionMenuOpen;
+
+            if (isActionMenuOpen) {
+                menu.classList.remove('hidden', 'quick-action-leave-active');
+                menu.classList.add('quick-action-enter-active');
+                icon.classList.remove('fab-icon-plus');
+                icon.classList.add('fab-icon-close');
+                icon.textContent = '✕';
+            } else {
+                 menu.classList.remove('quick-action-enter-active');
+                 menu.classList.add('quick-action-leave-active');
+                 icon.classList.remove('fab-icon-close');
+                 icon.classList.add('fab-icon-plus');
+                 icon.textContent = '+';
+                 setTimeout(() => {
+                    menu.classList.add('hidden');
+                 }, 200); // Wait for transition
+            }
+        }
+
+
+        // --- Vision Board UI & Modal ---
+
+        function renderVisionBoard(container) {
+            const visionHTML = `
+                <h2 class="text-xl font-bold mb-4 text-gray-700 text-center">لوحة الأهداف (Vision Board) ✨</h2>
+                <div id="vision-board-area" class="vision-board relative mx-auto overflow-hidden">
+                    ${visionItems.map(item => renderVisionItem(item)).join('')}
+                    ${visionItems.length === 0 ? '<p class="text-center text-gray-400 p-8">اضغطي على زر (+) واخترتي 🖼️ لإضافة أول هدف!</p>' : ''}
+                </div>
+            `;
+            container.innerHTML = visionHTML;
+            
+            // Attach drag event listeners after rendering
+            visionItems.forEach(item => {
+                const element = document.getElementById(`vision-item-${item.id}`);
+                if (element) {
+                    attachDragListeners(element, item.id);
+                }
+            });
+        }
+        
+        function renderVisionItem(item) {
+            // Using a slightly smaller height for better mobile layout
+            const itemHeight = item.height > 100 ? item.height : 150; 
+            const imgHeight = itemHeight - 30;
+
+            return `
+                <div id="vision-item-${item.id}" class="vision-item p-2 rounded-xl w-[${item.width}px] shadow-lg" 
+                     style="left: ${item.x}px; top: ${item.y}px; height: ${itemHeight}px; width: 150px;">
+                    <img src="${item.imageUrl}" alt="${item.title}" class="w-full h-[${imgHeight}px] object-cover rounded-lg mb-1" loading="lazy" 
+                         onerror="this.onerror=null;this.src='https://placehold.co/150x120/${getComputedStyle(document.documentElement).getPropertyValue('--pink-medium').trim().slice(1)}/fff?text=صورة+مفقودة';">
+                    <p class="text-sm font-semibold text-center text-gray-700 truncate">${item.title}</p>
+                    <p class="text-xs text-center text-gray-500 truncate">${item.description}</p>
+                </div>
+            `;
+        }
+        
+        function attachDragListeners(element, id) {
+            let active = false;
+            let currentX, currentY, initialX, initialY;
+            const container = document.getElementById('vision-board-area');
+
+            const dragStart = (e) => {
+                e.preventDefault();
+                // Ensure to get clientX/Y from the first touch point if it's a touch event
+                initialX = e.clientX || e.touches[0].clientX;
+                initialY = e.clientY || e.touches[0].clientY;
+                element.style.zIndex = 50; 
+                active = true;
+            };
+
+            const dragEnd = () => {
+                if (!active) return;
+                active = false;
+                element.style.zIndex = 10;
+                
+                // Get final position relative to the container
+                const finalX = element.offsetLeft;
+                const finalY = element.offsetTop;
+                
+                // Update position in Firebase
+                updateVisionItemPosition(id, finalX, finalY);
+            };
+
+            const drag = (e) => {
+                if (!active) return;
+                
+                // Ensure to get clientX/Y from the first touch point if it's a touch event
+                const clientX = e.clientX || e.touches[0].clientX;
+                const clientY = e.touches[0].clientY;
+
+                currentX = clientX - initialX;
+                currentY = clientY - initialY;
+                
+                initialX = clientX;
+                initialY = clientY;
+                
+                let newX = element.offsetLeft + currentX;
+                let newY = element.offsetTop + currentY;
+                
+                // Boundary checking
+                newX = Math.max(0, Math.min(newX, container.offsetWidth - element.offsetWidth));
+                newY = Math.max(0, Math.min(newY, container.offsetHeight - element.offsetHeight));
+
+                element.style.left = `${newX}px`;
+                element.style.top = `${newY}px`;
+            };
+
+            // Mouse events
+            element.addEventListener('mousedown', dragStart);
+            document.addEventListener('mouseup', dragEnd);
+            document.addEventListener('mousemove', drag);
+            
+            // Touch events for mobile
+            element.addEventListener('touchstart', dragStart);
+            document.addEventListener('touchend', dragEnd);
+            document.addEventListener('touchmove', drag);
+        }
+
+        function openVisionModal() {
+            const modalHTML = `
+                <h3 class="text-xl font-bold text-center mb-4" style="color: var(--pink-dark);">✨ أضف هدفك لـ Vision Board</h3>
+                <input type="file" id="vision-image-upload" accept="image/*" class="w-full mb-3 p-2 border border-gray-300 rounded-lg focus:ring-0 focus:border-pink-medium text-sm">
+                <input type="text" id="vision-title" placeholder="عنوان الهدف (مثل: نجاح العمل)" class="w-full mb-3 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-medium">
+                <textarea id="vision-description" placeholder="وصف قصير (مثلاً: سأسعى لتحقيق هذا الهدف بالاجتهاد والمثابرة)" class="w-full mb-4 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-medium resize-none h-20"></textarea>
+                <button id="save-vision-item" class="w-full p-3 rounded-xl text-white font-bold transition duration-200 hover:opacity-90 pink-button" style="background-color: var(--pink-accent);">
+                    حفظ الهدف 🎀
+                </button>
+                <button onclick="closeModal()" class="w-full mt-2 p-2 text-sm rounded-xl text-gray-500 hover:text-gray-700 transition duration-200">إلغاء</button>
+            `;
+            openModal(modalHTML);
+            
+            document.getElementById('save-vision-item').onclick = () => {
+                const fileInput = document.getElementById('vision-image-upload').files[0];
+                const title = document.getElementById('vision-title').value;
+                const description = document.getElementById('vision-description').value;
+                handleAddVisionItem(fileInput, title, description);
+            };
+        }
+
+        // --- Reminders UI & Modal ---
+
+        function renderReminders(container) {
+            requestNotificationPermission(); // Request permission when viewing the page
+
+            const remindersHTML = `
+                <h2 class="text-xl font-bold mb-4 text-gray-700 text-center">التذكيرات اليومية 🔔</h2>
+                <p class="text-center text-sm text-gray-500 mb-6">اضغطي على زر (+) واخترتي 🔔 لإضافة تذكير جديد.</p>
+                <div class="space-y-3">
+                    ${reminders.map(r => `
+                        <div class="bg-white p-4 rounded-xl shadow-md flex justify-between items-center transition duration-200 hover:shadow-lg" style="border-left: 8px solid var(--pink-medium);">
+                            <div class="flex-grow">
+                                <p class="text-sm font-semibold text-gray-700">${r.text}</p>
+                                <p class="text-xs text-gray-500 mt-1">${r.schedule ? 'سيتم التذكير في: ' + new Date(r.schedule).toLocaleString('ar-EG', { dateStyle: 'short', timeStyle: 'short' }) : 'لم يتم تحديد وقت'}</p>
+                            </div>
+                            <button onclick="handleDeleteReminder('${r.id}')" class="text-red-500 hover:text-red-700 ml-3 transition duration-200">
+                                🗑️
+                            </button>
+                        </div>
+                    `).join('')}
+                    ${reminders.length === 0 ? '<p class="text-center text-gray-400 p-8">قائمة تذكيراتك فارغة حالياً.</p>' : ''}
+                </div>
+            `;
+            container.innerHTML = remindersHTML;
+        }
+
+        function openReminderModal() {
+             const now = new Date();
+             // Adjust time to local timezone for the input default value
+             const localISOTime = new Date(now.getTime() - (now.getTimezoneOffset() * 60000)).toISOString().slice(0, 16);
+            
+             const modalHTML = `
+                <h3 class="text-xl font-bold text-center mb-4" style="color: var(--pink-dark);">أضف تذكير إيجابي 💖</h3>
+                <p class="text-sm text-center text-gray-500 mb-3">تأكدي من تفعيل الإشعارات في المتصفح!</p>
+                <textarea id="reminder-text" placeholder="اكتب تذكيرك الإيجابي هنا" class="w-full mb-3 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-medium resize-none h-24"></textarea>
+                <label for="reminder-time" class="block text-sm font-medium mb-1 text-gray-700">تحديد وقت التذكير:</label>
+                <input type="datetime-local" id="reminder-time" min="${localISOTime}" value="${localISOTime}" class="w-full mb-4 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-medium text-sm">
+                <button id="save-reminder-item" class="w-full p-3 rounded-xl text-white font-bold transition duration-200 hover:opacity-90 pink-button" style="background-color: var(--pink-accent);">
+                    حفظ التذكير 🔔
+                </button>
+                <button onclick="closeModal()" class="w-full mt-2 p-2 text-sm rounded-xl text-gray-500 hover:text-gray-700 transition duration-200">إلغاء</button>
+            `;
+            openModal(modalHTML);
+            
+            document.getElementById('save-reminder-item').onclick = () => {
+                const text = document.getElementById('reminder-text').value;
+                const time = document.getElementById('reminder-time').value;
+                handleAddReminder(text, time);
+            };
+        }
+
+        // --- Journal UI & Modal (Text/Words) ---
+        
+        function renderJournal(container) {
+            const journalHTML = `
+                <h2 class="text-xl font-bold mb-4 text-gray-700 text-center">دفتر مذكراتي 📔</h2>
+                <p class="text-center text-sm text-gray-500 mb-6">اضغطي على زر (+) واخترتي 📝 لكتابة مدخل جديد.</p>
+
+                <div class="space-y-4 mt-6">
+                    ${journalEntries.map(entry => `
+                        <div class="bg-white p-4 rounded-2xl shadow-lg border-r-8 transition duration-200 hover:shadow-xl" style="border-color: var(--pink-medium);">
+                            <p class="text-sm text-gray-800 whitespace-pre-wrap">${entry.content}</p>
+                            <p class="text-xs text-gray-400 mt-3 text-left border-t pt-2">${new Date(entry.createdAt).toLocaleString('ar-EG')}</p>
+                        </div>
+                    `).join('')}
+                    ${journalEntries.length === 0 ? '<p class="text-center text-gray-400 p-8">ابدئي بكتابة أول مدخل إيجابي لكِ!</p>' : ''}
+                </div>
+            `;
+            
+            container.innerHTML = journalHTML;
+        }
+
+        function openJournalModal() {
+             const modalHTML = `
+                <h3 class="text-xl font-bold text-center mb-4" style="color: var(--pink-dark);">📝 مدخل جديد في مذكراتي</h3>
+                <textarea id="journal-input" placeholder="اكتبي مشاعرك وأفكارك الإيجابية هنا..." 
+                          class="w-full p-3 h-48 border border-pink-light rounded-2xl resize-none focus:outline-none focus:ring-2 focus:ring-pink-dark text-sm"></textarea>
+                <button id="save-journal-btn" class="w-full p-3 mt-4 rounded-xl text-white font-bold transition duration-200 hover:opacity-90 pink-button" style="background-color: var(--pink-accent);">
+                    حفظ المدخل 💾
+                </button>
+                <button onclick="closeModal()" class="w-full mt-2 p-2 text-sm rounded-xl text-gray-500 hover:text-gray-700 transition duration-200">إلغاء</button>
+            `;
+            
+            openModal(modalHTML);
+            
+            document.getElementById('save-journal-btn').onclick = () => {
+                const text = document.getElementById('journal-input').value;
+                handleSaveJournalEntry(text);
+            };
+        }
+        
+        // --- Anti-Overthinking UI & Logic ---
+        
+        function getRandomQuote() {
+            const randomIndex = Math.floor(Math.random() * mentalHealthQuotes.length);
+            return mentalHealthQuotes[randomIndex];
+        }
+        
+        function initializeBreathingSteps() {
+            // [instruction, duration_ms, end_size_factor, color]
+            // Scale 1.0 = Base size (128px), Scale 1.5 = Expanded size (192px)
+            return [
+                { text: "شهيق", duration: 4000, startScale: 1.0, endScale: 1.5, color: 'var(--pink-dark)' }, // Inhale
+                { text: "حبس", duration: 4000, startScale: 1.5, endScale: 1.5, color: 'var(--pink-accent)' }, // Hold
+                { text: "زفير", duration: 6000, startScale: 1.5, endScale: 1.0, color: 'var(--pink-medium)' }, // Exhale
+                { text: "استراحة", duration: 2000, startScale: 1.0, endScale: 1.0, color: 'var(--pink-light)' } // Pause
+            ];
+        }
+        
+        function stopBreathingAnimation() {
+            if (breathingInterval) {
+                clearInterval(breathingInterval);
+                breathingInterval = null;
+            }
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+                countdownInterval = null;
+            }
+        }
+
+        function toggleBreathingExercise(forceStop) {
+            const button = document.getElementById('toggle-breathing-btn');
+            const display = document.getElementById('breathing-display');
+            const instruction = document.getElementById('breathing-instruction');
+
+            if (!button || !display || !instruction) return; 
+            
+            if (isBreathingActive || forceStop) {
+                // Stop the exercise
+                stopBreathingAnimation();
+                isBreathingActive = false;
+                button.textContent = 'بدء جلسة التنفس 🧘‍♀️';
+                button.style.backgroundColor = 'var(--pink-accent)';
+                display.style.transform = 'scale(1.0)';
+                display.style.boxShadow = '0 0 0 0 rgba(255, 105, 180, 0.4)';
+                display.style.backgroundColor = 'var(--pink-medium)';
+                instruction.textContent = 'استعدي للبدء';
+                display.innerHTML = '<span class="text-sm">انقر للبدء</span>';
+                display.style.color = 'white';
+            } else {
+                // Start the exercise
+                isBreathingActive = true;
+                button.textContent = 'إيقاف الجلسة';
+                button.style.backgroundColor = '#EF4444'; // Red for Stop
+                breathingSteps = initializeBreathingSteps();
+                currentStepIndex = 0;
+                startBreathingCycle();
+            }
+        }
+        
+        function startBreathingCycle() {
+            if (!isBreathingActive) return;
+
+            // Stop any previous cycle intervals
+            stopBreathingAnimation();
+            
+            // Run the first step immediately
+            runBreathingStep();
+            
+            // Set interval to move to the next step (Total cycle duration: 4+4+6+2 = 16 seconds)
+            const cycleDuration = breathingSteps.reduce((sum, step) => sum + step.duration, 0);
+            
+            let accumulatedDelay = 0;
+            // First delay is 0, so the first step runs immediately inside runBreathingStep()
+            
+            breathingSteps.forEach((step, index) => {
+                // Set timeout for the start of the next step
+                setTimeout(() => {
+                    // Only run if the animation is still active (user hasn't stopped it)
+                    if (isBreathingActive) {
+                         currentStepIndex = index;
+                         runBreathingStep();
+                    }
+                }, accumulatedDelay);
+                
+                accumulatedDelay += step.duration;
+            });
+            
+            // Re-start the whole cycle when the total cycle duration is met
+            breathingInterval = setInterval(() => {
+                 if (isBreathingActive) {
+                    breathingSteps.forEach((step, index) => {
+                        setTimeout(() => {
+                             if (isBreathingActive) {
+                                currentStepIndex = index;
+                                runBreathingStep();
+                            }
+                        }, breathingSteps.slice(0, index).reduce((sum, s) => sum + s.duration, 0));
+                    });
+                 } else {
+                     clearInterval(breathingInterval);
+                 }
+            }, cycleDuration);
+        }
+
+        function runBreathingStep() {
+            const step = breathingSteps[currentStepIndex];
+            const display = document.getElementById('breathing-display');
+            const instruction = document.getElementById('breathing-instruction');
+
+            if (!display || !instruction || !isBreathingActive) {
+                stopBreathingAnimation();
+                return;
+            }
+            
+            // 1. Update text instruction
+            instruction.textContent = `${step.text} (${Math.floor(step.duration / 1000)} ثوانٍ)`;
+            
+            // 2. Animate the circle size and color
+            // Set transition duration based on the step duration
+            display.style.transitionDuration = `${step.duration}ms`; 
+            display.style.transform = `scale(${step.endScale})`;
+            display.style.backgroundColor = step.color;
+            
+            // Adjust text color dynamically for better contrast on light/dark backgrounds
+            display.style.color = (step.color === 'var(--pink-light)') ? 'var(--text-color)' : 'white'; 
+            
+            // 3. Update inner countdown
+            if (countdownInterval) {
+                clearInterval(countdownInterval);
+            }
+            
+            let countdown = Math.floor(step.duration / 1000);
+            // Display the starting countdown value
+            display.innerHTML = countdown;
+            
+            // Inner countdown interval
+            countdownInterval = setInterval(() => {
+                countdown--;
+                if (countdown >= 0) {
+                    display.innerHTML = countdown;
+                } else {
+                    clearInterval(countdownInterval);
+                    // The main cycle timer will call the next step
+                }
+            }, 1000);
+
+            // Add pulsing glow effect
+            const glowFactor = step.endScale === 1.5 ? 30 : 0; 
+            display.style.boxShadow = `0 0 ${glowFactor}px ${step.color} inset, 0 0 ${glowFactor}px ${step.color}`;
+        }
+        
+        /**
+         * Opens the special "Rescue Message" modal.
+         */
+        function openRescueMessage() {
+             const rescueHTML = `
+                <h3 class="text-2xl font-bold text-center mb-4" style="color: var(--pink-accent);">💌 رسالة إنقاذ سريعة</h3>
+                
+                <div class="bg-pink-light p-4 rounded-xl shadow-inner mb-4">
+                    <p class="text-lg font-extrabold text-gray-800 mb-3 text-center">
+                        🛑 "مهلاً... الأفكار السلبية ليست حقائق!"
+                    </p>
+                    <p class="text-md text-gray-700 text-center leading-relaxed">
+                        عقلك يبالغ في التخيل بسبب الإرهاق. لا بأس، هذا ليس واقعك.
+                    </p>
+                    <p class="text-md text-gray-700 font-bold mt-3 text-center leading-relaxed">
+                        اذهبي إلى صفحة **مذكراتي**، استعرضي لحظة واحدة جيدة دونتِها، وتذكري:
+                        <br><span style="color: var(--pink-dark); font-weight: 800;">أنتِ بخير، وهذا سيمضي.</span>
+                    </p>
+                </div>
+                
+                <button onclick="closeModal()" class="w-full p-3 mt-4 rounded-xl text-white font-bold transition duration-200 hover:opacity-90 pink-button" style="background-color: var(--pink-dark);">
+                    حسناً، سأتنفس الآن 💖
+                </button>
+            `;
+            openModal(rescueHTML);
+        }
+
+
+        function renderAntiOverthinking(container) {
+            const quote = getRandomQuote();
+            
+            const antiHTML = `
+                <h2 class="text-xl font-bold mb-6 text-gray-700 text-center">مساحة الهدوء والتأريض 🧘‍♀️</h2>
+                
+                <!-- 1. Quote/Affirmation Card -->
+                <div class="bg-white p-6 rounded-3xl shadow-xl mb-6 border-l-8" style="border-color: var(--pink-accent);">
+                    <p class="text-lg font-extrabold italic text-gray-800 mb-3 text-center" style="font-family: 'Cairo', sans-serif;">
+                        "${quote.quote}"
+                    </p>
+                    <p class="text-xs text-gray-500 text-left">- ${quote.source}</p>
+                </div>
+                
+                <!-- 0. Rescue Message Button -->
+                <button onclick="openRescueMessage()" class="w-full p-3 rounded-xl text-white font-bold mb-8 transition duration-200 hover:scale-[1.01] hover:opacity-90 pink-button" 
+                        style="background-color: var(--pink-accent);">
+                    أفكار سلبية تهاجمني! (رسالة إنقاذ) 🆘
+                </button>
+
+
+                <!-- 2. Breathing Exercise -->
+                <div class="bg-white p-6 rounded-3xl shadow-xl mb-8">
+                    <h3 class="text-lg font-bold mb-4 text-center" style="color: var(--pink-dark);">تمرين التنفس المهدئ</h3>
+                    <div id="breathing-display" class="relative mx-auto w-32 h-32 rounded-full flex items-center justify-center text-white font-extrabold text-2xl cursor-pointer" 
+                         style="background-color: var(--pink-medium); box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.4);"
+                         onclick="if(!isBreathingActive) toggleBreathingExercise();">
+                        <span class="text-sm">${isBreathingActive ? '' : 'انقر للبدء'}</span>
+                    </div>
+                    <p id="breathing-instruction" class="text-center mt-4 text-gray-700 font-semibold">استعدي للبدء</p>
+                    <p class="text-center text-sm text-gray-500 mt-2">دورة واحدة: شهيق (4ث)، حبس (4ث)، زفير (6ث)، استراحة (2ث)</p>
+                    <button id="toggle-breathing-btn" class="w-full mt-4 p-3 rounded-xl text-white font-bold transition duration-200 hover:opacity-90 pink-button" 
+                            style="background-color: ${isBreathingActive ? '#EF4444' : 'var(--pink-accent)'};">
+                        ${isBreathingActive ? 'إيقاف الجلسة' : 'بدء جلسة التنفس 🧘‍♀️'}
+                    </button>
+                </div>
+
+                <!-- 3. Grounding Exercise (5-4-3-2-1) -->
+                <div class="bg-white p-6 rounded-3xl shadow-xl">
+                    <h3 class="text-lg font-bold mb-4 text-center" style="color: var(--pink-dark);">تمرين التأريض (5-4-3-2-1)</h3>
+                    <p class="text-sm text-gray-600 mb-4 text-center">لتشتيت القلق وإعادة تركيزك على اللحظة الحالية.</p>
+                    <ul class="space-y-3">
+                        <li class="grounding-list-item">
+                            <span class="text-2xl ml-2 text-pink-700">5️⃣</span>
+                            <div>
+                                <span class="font-bold text-gray-700">أشياء ترينها:</span>
+                                <span class="text-sm text-gray-500"> انظري حولك وسمّي 5 أشياء (اللون، الشكل، الملمس).</span>
+                            </div>
+                        </li>
+                         <li class="grounding-list-item">
+                            <span class="text-2xl ml-2 text-pink-700">4️⃣</span>
+                            <div>
+                                <span class="font-bold text-gray-700">أشياء تشعرين بها:</span>
+                                <span class="text-sm text-gray-500"> مسّي 4 أشياء (ملابسك، الكرسي، هاتفك).</span>
+                            </div>
+                        </li>
+                        <li class="grounding-list-item">
+                            <span class="text-2xl ml-2 text-pink-700">3️⃣</span>
+                            <div>
+                                <span class="font-bold text-gray-700">أشياء تسمعينها:</span>
+                                <span class="text-sm text-gray-500"> أصغي جيداً وسمّي 3 أصوات حولك (بعيدة أو قريبة).</span>
+                            </div>
+                        </li>
+                        <li class="grounding-list-item">
+                            <span class="text-2xl ml-2 text-pink-700">2️⃣</span>
+                            <div>
+                                <span class="font-bold text-gray-700">أشياء تشمينها:</span>
+                                <span class="text-sm text-gray-500"> سمّي رائحتين (قهوة، عطر، هواء الغرفة).</span>
+                            </div>
+                        </li>
+                        <li class="grounding-list-item">
+                            <span class="text-2xl ml-2 text-pink-700">1️⃣</span>
+                            <div>
+                                <span class="font-bold text-gray-700">شيء تتذوقينه/تؤكدينه:</span>
+                                <span class="text-sm text-gray-500"> تناولي شيئاً أو قولي تأكيداً إيجابياً بصوت عالٍ.</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            `;
+            container.innerHTML = antiHTML;
+            
+            // Attach event listener for breathing exercise
+            const breathingBtn = document.getElementById('toggle-breathing-btn');
+            if(breathingBtn) breathingBtn.onclick = () => toggleBreathingExercise(false); // No force stop
+            
+            // Re-apply state if active
+            if (isBreathingActive) {
+                // This re-establishes the state if the user navigates away and comes back
+                // We call runBreathingStep() to update the display to the current phase text and countdown
+                breathingSteps = initializeBreathingSteps();
+                runBreathingStep(); 
+            }
+        }
+
+
+        // --- Event Listeners and Initializers ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Setup navigation listeners
+            document.querySelectorAll('.tab-item').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const page = e.currentTarget.dataset.page;
+                    renderPage(page);
+                });
+            });
+
+            // Setup FAB listener to toggle Quick Action Menu
+            document.getElementById('fab-button').addEventListener('click', () => {
+                toggleActionMenu();
+            });
+            
+            // Setup Quick Action Menu buttons to open specific modals
+            document.getElementById('action-add-image').onclick = openVisionModal;
+            document.getElementById('action-add-text').onclick = openJournalModal;
+            document.getElementById('action-add-reminder').onclick = openReminderModal;
+
+
+            // Start Firebase and render default page
+            initFirebase();
+            renderPage(currentPage); // Initial render
+        });
+
+    </script>
+</body>
+</html>
+
+i
